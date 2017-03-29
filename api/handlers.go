@@ -641,6 +641,7 @@ func postContainersCreate(c *context, w http.ResponseWriter, r *http.Request) {
 		MemorySwap:      0,
 		CPUShares:       0,
 		CPUSet:          "",
+		VolumeDriver:    "",
 	}
 
 	if err := json.NewDecoder(r.Body).Decode(&oldconfig); err != nil {

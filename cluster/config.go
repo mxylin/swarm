@@ -25,10 +25,11 @@ type ContainerConfig struct {
 // This should be removed after we stop supporting API versions <= 1.8
 type OldContainerConfig struct {
 	ContainerConfig
-	Memory     int64
-	MemorySwap int64
-	CPUShares  int64  `json:"CpuShares"`
-	CPUSet     string `json:"Cpuset"`
+	Memory       int64
+	MemorySwap   int64
+	CPUShares    int64  `json:"CpuShares"`
+	CPUSet       string `json:"Cpuset"`
+	VolumeDriver string `json:"VolumeDriver"`
 }
 
 func parseEnv(e string) (bool, string, string) {
@@ -55,6 +56,10 @@ func ConsolidateResourceFields(c *OldContainerConfig) {
 
 	if c.CPUSet != c.HostConfig.CpusetCpus && c.CPUSet != "" {
 		c.HostConfig.CpusetCpus = c.CPUSet
+	}
+
+	if c.VolumeDriver != c.HostConfig.VolumeDriver && c.VolumeDriver != "" {
+		c.HostConfig.VolumeDriver = c.VolumeDriver
 	}
 }
 
